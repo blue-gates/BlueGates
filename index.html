@@ -11,7 +11,6 @@
 <style>
 :root{
   --accent:#3b82f6;
-  --bg:#f1f5f9;
   --card:#ffffff;
   --text:#020617;
   --muted:#64748b;
@@ -24,14 +23,8 @@
 
 body{
   margin:0;
-  background:linear-gradient(180deg,#e2e8f0,#f8fafc);
+  background:linear-gradient(180deg,#e0f2fe,#bfdbfe);
   color:var(--text);
-  animation:fadeIn .6s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
 }
 
 header{
@@ -78,11 +71,7 @@ form{
   box-shadow:0 12px 34px rgba(0,0,0,.1);
 }
 
-label{
-  font-size:.85rem;
-  font-weight:600;
-  color:var(--muted);
-}
+label{font-size:.85rem;font-weight:600;color:var(--muted)}
 
 input{
   width:100%;
@@ -108,63 +97,151 @@ footer{
   text-align:center;
   padding:14px;
   font-size:.75rem;
-  color:var(--muted);
+  color:#334155;
+}
+
+/* Chatbot */
+.chatbot-btn{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#60a5fa);
+  box-shadow:0 14px 36px rgba(0,0,0,.3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:999;
+}
+
+.chatbot-btn span{font-size:34px;color:#fff}
+
+.chatbot-box{
+  position:fixed;
+  right:18px;
+  bottom:95px;
+  width:280px;
+  background:linear-gradient(180deg,#2563eb,#3b82f6);
+  border-radius:24px;
+  box-shadow:0 22px 45px rgba(0,0,0,.3);
+  padding:14px;
+  display:none;
+  z-index:999;
+  color:#fff;
+}
+
+.chat-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+
+.whale-icon{
+  width:36px;height:36px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  color:#2563eb;font-size:22px
+}
+
+.chat-area{max-height:200px;overflow-y:auto;margin-bottom:8px}
+
+.bot-msg{
+  background:rgba(255,255,255,.2);
+  padding:8px 10px;
+  border-radius:14px 14px 14px 4px;
+  font-size:.82rem;
+  margin-bottom:6px
+}
+
+.user-msg{
+  background:#fff;color:#2563eb;padding:8px 10px;
+  border-radius:14px 14px 4px 14px;
+  font-size:.82rem;margin:6px 0 6px auto;
+  width:max-content;max-width:85%
+}
+
+.quick-btn{
+  margin:4px 0;padding:8px 10px;font-size:.8rem;
+  border-radius:14px;background:#fff;color:#2563eb;
+  border:none;width:100%
 }
 </style>
 </head>
 
 <body>
-
 <header>
   <h1>BlueGates</h1>
   <p>Smart Doorstep Services</p>
 </header>
 
 <div class="container">
+  <div class="services">
+    <div class="service">Mobile Repair</div>
+    <div class="service">Laptop Repair</div>
+    <div class="service">AC Service</div>
+    <div class="service">TV Repair</div>
+    <div class="service">Washing Machine</div>
+    <div class="service">Electrical Work</div>
+    <div class="service">Home Appliances</div>
+  </div>
 
-<div class="services">
-  <div class="service">Mobile Repair</div>
-  <div class="service">Laptop Repair</div>
-  <div class="service">AC Service</div>
-  <div class="service">TV Repair</div>
-  <div class="service">Washing Machine</div>
-  <div class="service">Electrical Work</div>
-  <div class="service">Home Appliances</div>
+  <form onsubmit="sendWhatsApp(event)">
+    <label>Name</label>
+    <input id="name" required>
+
+    <label>Phone Number</label>
+    <input id="phone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+
+    <label>Location / Area</label>
+    <input id="location" required>
+
+    <label>Pincode</label>
+    <input id="pincode" required pattern="[0-9]{6}">
+
+    <label>Nearest Landmark (Map Search)</label>
+    <input id="landmark" required placeholder="Eg: Kannur Bus Stand">
+
+    <label>Issue</label>
+    <input id="issue" required>
+
+    <button type="submit">Book via WhatsApp</button>
+  </form>
 </div>
 
-<form onsubmit="sendWhatsApp(event)">
-  <label>Name</label>
-  <input id="name" required>
+<footer>© BlueGates • Smart Doorstep Services</footer>
 
-  <label>Phone Number</label>
-  <input id="phone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+<!-- Chatbot -->
+<div class="chatbot-box" id="chatbotBox">
+  <div class="chat-header">
+    <div class="whale-icon">
+  <svg viewBox="0 0 512 512" width="24" height="24" aria-hidden="true">
+    <path fill="#ffffff" d="M56 272c0-88 104-176 232-176 84 0 160 40 200 96 8 12-4 28-18 24l-44-12c-16-4-32 4-40 18l-18 32c-10 18-30 30-52 30H200c-24 0-44 20-44 44s20 44 44 44h40c16 0 24 20 12 30-28 24-72 46-108 46-72 0-88-48-88-120zm304-120c16 0 28-12 28-28s-12-28-28-28-28 12-28 28 12 28 28 28z"/>
+  </svg>
+</div>
+    <strong>Techy</strong>
+  </div>
 
-  <label>Location / Area</label>
-  <input id="location" required>
+  <div class="chat-area" id="chatArea">
+    <div class="bot-msg">Hi! I’m Techy 🐳<br>Tap a question below 👇</div>
+  </div>
 
-  <label>Pincode</label>
-  <input id="pincode" required pattern="[0-9]{6}">
-
-  <label>Nearest Landmark (Map Search)</label>
-  <input id="landmark" required placeholder="Eg: Kannur Bus Stand">
-
-  <label>Issue</label>
-  <input id="issue" required>
-
-  <button type="submit">Book via WhatsApp</button>
-</form>
-
+  <button class="quick-btn" onclick="ask(0)">How do I book a service?</button>
+  <button class="quick-btn" onclick="ask(1)">Is this service free?</button>
+  <button class="quick-btn" onclick="ask(2)">How fast will technician arrive?</button>
+  <button class="quick-btn" onclick="ask(3)">Do I need to pay online?</button>
+  <button class="quick-btn" onclick="ask(4)">Which areas are supported?</button>
 </div>
 
-<footer>
-© BlueGates • Smart Doorstep Services
-</footer>
+<div class="chatbot-btn" onclick="toggleChatbot()">
+  <svg viewBox="0 0 512 512" width="34" height="34" aria-hidden="true">
+    <path fill="#ffffff" d="M56 272c0-88 104-176 232-176 84 0 160 40 200 96 8 12-4 28-18 24l-44-12c-16-4-32 4-40 18l-18 32c-10 18-30 30-52 30H200c-24 0-44 20-44 44s20 44 44 44h40c16 0 24 20 12 30-28 24-72 46-108 46-72 0-88-48-88-120zm304-120c16 0 28-12 28-28s-12-28-28-28-28 12-28 28 12 28 28 28z"/>
+  </svg>
+</div>
 
 <script>
-// single script block – no duplication
+// single global state (bug fixed)
 let selectedService = "";
 
-document.querySelectorAll('.service').forEach(service => {
+// service selection
+Array.from(document.querySelectorAll('.service')).forEach(service => {
   service.addEventListener('click', () => {
     document.querySelectorAll('.service').forEach(s => s.classList.remove('active'));
     service.classList.add('active');
@@ -172,38 +249,47 @@ document.querySelectorAll('.service').forEach(service => {
   });
 });
 
-function sendWhatsApp(e) {
+// chatbot toggle
+function toggleChatbot(){
+  const box = document.getElementById('chatbotBox');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
+
+// chatbot answers
+const answers = [
+  'Select a service, fill your details, and tap Book via WhatsApp 💙',
+  'Booking is free. Pay only after service completion 😊',
+  'Usually within a few hours depending on your location ⏱️',
+  'No online payment needed. Pay after service 👍',
+  'Currently nearby local areas are supported. Expansion soon 🚀'
+];
+
+function ask(i){
+  const area = document.getElementById('chatArea');
+
+  const user = document.createElement('div');
+  user.className = 'user-msg';
+  user.innerText = document.querySelectorAll('.quick-btn')[i].innerText;
+  area.appendChild(user);
+
+  setTimeout(() => {
+    const bot = document.createElement('div');
+    bot.className = 'bot-msg';
+    bot.innerText = answers[i];
+    area.appendChild(bot);
+    area.scrollTop = area.scrollHeight;
+  }, 400);
+}
+
+// WhatsApp booking
+function sendWhatsApp(e){
   e.preventDefault();
+  if(!selectedService){ alert('Please select a service'); return; }
 
-  if (!selectedService) {
-    alert('Please select a service');
-    return;
-  }
-
-  const name = document.getElementById('name').value;
-  const phone = document.getElementById('phone').value;
-  const location = document.getElementById('location').value;
-  const pincode = document.getElementById('pincode').value;
-  const landmark = document.getElementById('landmark').value;
-  const issue = document.getElementById('issue').value;
-
-  const mapLink = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(landmark);
-
-  const msg =
-`Service Booking
-
-Name: ${name}
-Phone: ${phone}
-Location: ${location}
-Pincode: ${pincode}
-Landmark: ${landmark}
-Map: ${mapLink}
-Service: ${selectedService}
-Issue: ${issue}`;
+  const msg = `Service Booking\n\nName: ${name.value}\nPhone: ${phone.value}\nLocation: ${location.value}\nPincode: ${pincode.value}\nLandmark: ${landmark.value}\nMap: https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(landmark.value)}\nService: ${selectedService}\nIssue: ${issue.value}`;
 
   window.location.href = 'https://wa.me/916235512787?text=' + encodeURIComponent(msg);
 }
 </script>
-
 </body>
 </html>
