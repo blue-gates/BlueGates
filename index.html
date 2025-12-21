@@ -16,20 +16,24 @@
   --accent:#2563eb;
 }
 
-.dark{
+body.dark{
   --bg:#020617;
-  --card:#0f172a;
+  --card:#020617;
   --text:#f8fafc;
   --muted:#94a3b8;
-  --accent:#3b82f6;
+  --accent:#38bdf8;
 }
 
-*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
 
 body{
   margin:0;
   background:var(--bg);
   color:var(--text);
+  transition:.3s;
 }
 
 /* Top Bar */
@@ -37,75 +41,75 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:14px 16px;
+  padding:16px;
   background:var(--card);
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
 
-.topbar h1{margin:0;font-size:1.2rem}
+.topbar h1{
+  font-size:1.2rem;
+  margin:0;
+}
 
+/* Toggle */
 .toggle{
-  border:none;
-  background:var(--accent);
-  color:#fff;
-  padding:8px 14px;
-  border-radius:14px;
+  border:1px solid var(--muted);
+  padding:6px 14px;
+  border-radius:999px;
+  cursor:pointer;
   font-size:.8rem;
 }
 
-/* Main Card */
+/* Container */
 .container{
   max-width:480px;
-  margin:20px auto;
+  margin:auto;
   padding:16px;
 }
 
+/* Card */
 .card{
   background:var(--card);
-  border-radius:24px;
+  border-radius:20px;
   padding:20px;
-  box-shadow:0 18px 40px rgba(0,0,0,.12);
+  box-shadow:0 12px 34px rgba(0,0,0,.1);
+  margin-bottom:20px;
 }
 
-.badge{
-  background:var(--accent);
-  color:#fff;
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:.75rem;
-  margin-bottom:10px;
+.card h2{
+  margin-top:0;
+  font-size:1.2rem;
 }
 
-h2{margin:8px 0 6px}
-p{color:var(--muted);font-size:.9rem}
-
-/* Form */
+/* Input */
 label{
-  font-size:.75rem;
-  font-weight:700;
+  font-size:.8rem;
+  font-weight:600;
   color:var(--muted);
 }
 
-input{
+input,textarea{
   width:100%;
-  padding:12px 14px;
+  padding:12px;
   margin:6px 0 14px;
-  border-radius:14px;
-  border:1px solid #e5e7eb;
+  border-radius:12px;
+  border:1px solid #cbd5f5;
   background:transparent;
   color:var(--text);
 }
 
-button.main{
+textarea{resize:none}
+
+/* Button */
+button{
   width:100%;
   padding:15px;
   border:none;
-  border-radius:18px;
-  background:linear-gradient(135deg,#2563eb,#3b82f6);
-  color:#fff;
+  border-radius:16px;
   font-size:1rem;
-  font-weight:800;
+  font-weight:700;
+  color:#fff;
+  background:linear-gradient(135deg,#2563eb,#38bdf8);
 }
 
 /* Footer */
@@ -115,7 +119,6 @@ footer{
   color:var(--muted);
   padding:16px;
 }
-footer a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 
@@ -123,68 +126,81 @@ footer a{color:var(--accent);text-decoration:none}
 
 <div class="topbar">
   <h1>BlueGates</h1>
-  <button class="toggle" onclick="toggleTheme()">Theme</button>
+  <div class="toggle" onclick="toggleTheme()">Theme</div>
 </div>
 
 <div class="container">
+
   <div class="card">
-    <span class="badge">Mobile Repair • Kannur Only</span>
+    <h2>📱 Mobile Repair (Kannur Only)</h2>
+    <p style="font-size:.85rem;color:var(--muted)">
+      Beta Service – Available only in Kannur District
+    </p>
+  </div>
 
-    <h2>Doorstep Mobile Repair</h2>
-    <p>Currently available only in <strong>Kannur District</strong>.  
-    Beta version (60 days).</p>
-
+  <div class="card">
     <form onsubmit="book(event)">
       <label>Name</label>
       <input id="name" required>
 
       <label>Phone</label>
-      <input id="phone" pattern="[0-9]{10}" placeholder="10 digit number" required>
+      <input id="phone" required pattern="[0-9]{10}">
 
       <label>Area (Kannur)</label>
-      <input id="area" required>
+      <input id="area" required placeholder="Eg: Thalassery">
 
-      <label>Issue</label>
-      <input id="issue" placeholder="Screen / Battery / Software" required>
+      <label>Problem</label>
+      <textarea id="issue" rows="3" required></textarea>
 
-      <button class="main">Book via WhatsApp</button>
+      <button>Book via WhatsApp</button>
     </form>
   </div>
+
+  <div class="card">
+    <h2>Privacy Policy</h2>
+    <p style="font-size:.8rem;color:var(--muted)">
+      We only collect your name, phone number and location
+      to provide mobile repair service. No data is stored or shared.
+    </p>
+  </div>
+
 </div>
 
 <footer>
-  © BlueGates • Kannur  
-  <br>
-  <a href="#" onclick="alert('Privacy Policy will be added soon')">Privacy Policy</a>
+  © 2025 BlueGates • Beta Version • Kannur
 </footer>
 
 <script>
-// theme toggle
 function toggleTheme(){
   document.body.classList.toggle('dark');
 }
 
-// geolocation
-document.addEventListener('deviceready', ()=>{
-  navigator.geolocation.getCurrentPosition(pos=>{
-    document.getElementById('area').value = "Kannur";
-  });
-});
-
-// booking
 function book(e){
   e.preventDefault();
 
-  const msg =
-`Mobile Repair Booking (Kannur)
+  if(!navigator.geolocation){
+    alert("Location not supported");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
+
+    const msg =
+`BlueGates Mobile Repair (Kannur)
 
 Name: ${name.value}
 Phone: ${phone.value}
 Area: ${area.value}
-Issue: ${issue.value}`;
+Issue: ${issue.value}
 
-  window.location.href =
-    "https://wa.me/916235512787?text=" + encodeURIComponent(msg);
+Location:
+https://maps.google.com/?q=${lat},${lon}`;
+
+    window.location.href =
+      "https://wa.me/916235512787?text="+encodeURIComponent(msg);
+  });
 }
 </script>
 
