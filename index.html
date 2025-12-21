@@ -20,175 +20,156 @@ body.dark{
   --card:#0f172a;
   --text:#f8fafc;
   --muted:#94a3b8;
-  --accent:#38bdf8;
+  --accent:#3b82f6;
 }
 
-*{box-sizing:border-box;font-family:system-ui}
+*{box-sizing:border-box;font-family:system-ui,Roboto}
 body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
 
-header{
+/* TOP BAR */
+.topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:16px;
   background:var(--card);
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
+  box-shadow:0 8px 30px rgba(0,0,0,.08);
 }
-.menu-btn{
-  font-size:26px;
-  cursor:pointer;
-}
-.badge{
-  background:red;
-  color:#fff;
-  font-size:10px;
-  padding:2px 6px;
-  border-radius:10px;
-  margin-left:4px;
-}
+.menu-btn{font-size:22px;cursor:pointer}
+.logo{font-weight:800;font-size:18px}
 
+/* MENU */
 .menu{
-  position:absolute;
+  position:fixed;
   top:70px;
   right:16px;
-  width:230px;
   background:var(--card);
+  width:220px;
   border-radius:18px;
   box-shadow:0 20px 40px rgba(0,0,0,.25);
   padding:14px;
   display:none;
   animation:drop .3s ease;
+  z-index:99;
 }
 @keyframes drop{
   from{opacity:0;transform:translateY(-10px)}
   to{opacity:1;transform:translateY(0)}
 }
-.menu button{
-  width:100%;
-  margin:6px 0;
+.menu-item{
   padding:10px;
-  border:none;
   border-radius:12px;
-  background:var(--bg);
-  color:var(--text);
-  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
 }
+.menu-item:hover{background:rgba(0,0,0,.05)}
+.toggle{float:right}
 
-.container{
-  padding:18px;
-  max-width:480px;
-  margin:auto;
-}
+/* NOTICE */
 .notice{
-  background:var(--accent);
-  color:#fff;
+  margin:16px;
   padding:14px;
-  border-radius:16px;
-  margin-bottom:16px;
-  font-size:.9rem;
+  background:linear-gradient(135deg,#2563eb,#3b82f6);
+  color:#fff;
+  border-radius:18px;
+  font-size:13px;
 }
 
+/* SERVICES */
+.container{padding:16px}
 .services{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px;
+  gap:14px;
 }
-.service{
+.card{
   background:var(--card);
+  border-radius:20px;
   padding:18px;
-  border-radius:18px;
   text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
+  transition:.25s;
 }
-.locked{
+.card.active{border:2px solid var(--accent);cursor:pointer}
+.card.locked{
   opacity:.45;
-}
-.service button{
-  margin-top:10px;
-  padding:10px;
-  width:100%;
-  border:none;
-  border-radius:12px;
-  background:var(--accent);
-  color:#fff;
-  font-weight:700;
-}
-.locked button{
-  background:#94a3b8;
+  filter:grayscale(1);
 }
 
+/* POPUP */
 .popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.4);
+  background:rgba(0,0,0,.6);
   display:none;
   align-items:center;
   justify-content:center;
+  z-index:999;
 }
-.popup div{
+.popup-box{
   background:var(--card);
-  padding:22px;
-  border-radius:18px;
+  padding:24px;
+  border-radius:22px;
   text-align:center;
-  max-width:260px;
+  width:260px;
 }
-
-footer{
-  text-align:center;
-  padding:14px;
-  font-size:.75rem;
-  color:var(--muted);
+.popup-box button{
+  margin-top:14px;
+  padding:10px 18px;
+  border:none;
+  border-radius:14px;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
 }
 </style>
 </head>
 
 <body>
-<header>
-  <strong>BlueGates</strong>
-  <div class="menu-btn" onclick="toggleMenu()">☰<span class="badge">1</span></div>
-</header>
 
+<!-- TOP -->
+<div class="topbar">
+  <div class="menu-btn" onclick="toggleMenu()">≡</div>
+  <div class="logo">BlueGates</div>
+</div>
+
+<!-- MENU -->
 <div class="menu" id="menu">
-  <button onclick="toggleTheme()">🌗 Theme Toggle</button>
-  <button onclick="showUpdate()">🔔 Updates</button>
-  <button onclick="alert('Privacy policy coming soon')">🔒 Privacy Policy</button>
+  <div class="menu-item">
+    Dark Theme
+    <input type="checkbox" class="toggle" onchange="toggleTheme()">
+  </div>
+  <div class="menu-item" onclick="showNotification()">Updates <strong style="color:red">●</strong></div>
+  <div class="menu-item" onclick="alert('Privacy Policy coming soon')">Privacy Policy</div>
 </div>
 
+<!-- NOTICE -->
+<div class="notice">
+Service available **ONLY in Kannur** 🚧  
+We are coming stronger across Kerala soon.
+</div>
+
+<!-- SERVICES -->
 <div class="container">
-  <div class="notice">
-    📍 Service available only in <b>Kannur</b><br>
-    We are coming stronger 💪
-  </div>
-
   <div class="services">
-    <div class="service">
-      <strong>📱 Mobile Repair</strong>
-      <button onclick="alert('Booking enabled (WhatsApp / Firebase next)')">Book Now</button>
+    <div class="card active" onclick="book()">
+      <strong>Mobile Repair</strong><br>
+      <small>Now Available</small>
     </div>
 
-    <div class="service locked">
-      <strong>💻 Laptop</strong>
-      <button onclick="comingSoon()">Locked</button>
-    </div>
-
-    <div class="service locked">
-      <strong>📺 TV</strong>
-      <button onclick="comingSoon()">Locked</button>
-    </div>
-
-    <div class="service locked">
-      <strong>❄️ AC</strong>
-      <button onclick="comingSoon()">Locked</button>
-    </div>
+    <div class="card locked" onclick="comingSoon()">Laptop Repair</div>
+    <div class="card locked" onclick="comingSoon()">TV Repair</div>
+    <div class="card locked" onclick="comingSoon()">AC Service</div>
+    <div class="card locked" onclick="comingSoon()">Home Appliances</div>
+    <div class="card locked" onclick="comingSoon()">Electrical</div>
   </div>
 </div>
 
-<footer>© BlueGates • Beta Version</footer>
-
+<!-- POPUP -->
 <div class="popup" id="popup">
-  <div>
-    <h3>🚧 Coming Soon</h3>
-    <p>Service launching soon in all Kerala</p>
+  <div class="popup-box">
+    <strong>Coming Soon</strong>
+    <p>This service will be available in next update.</p>
     <button onclick="closePopup()">OK</button>
   </div>
 </div>
@@ -207,9 +188,13 @@ function comingSoon(){
 function closePopup(){
   document.getElementById('popup').style.display='none';
 }
-function showUpdate(){
-  alert("📢 Service now available only in Kannur.\nWe are coming stronger 💪");
+function showNotification(){
+  alert("This app service is now available only in Kannur. We are coming stronger!");
+}
+function book(){
+  alert("Mobile Repair booking enabled (Kannur only)");
 }
 </script>
+
 </body>
 </html>
