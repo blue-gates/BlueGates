@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>BlueGates</title>
 
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#0f172a" />
 
 <style>
+/* ===== THEME ===== */
 :root{
   --bg:#f8fafc;
   --card:#ffffff;
@@ -15,185 +16,237 @@
   --muted:#64748b;
   --accent:#2563eb;
 }
-body.dark{
+
+.dark{
   --bg:#020617;
-  --card:#0f172a;
-  --text:#f8fafc;
+  --card:#020617;
+  --text:#e5e7eb;
   --muted:#94a3b8;
   --accent:#3b82f6;
 }
 
-*{box-sizing:border-box;font-family:system-ui,Roboto}
+*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto}
 body{margin:0;background:var(--bg);color:var(--text);transition:.3s}
 
-/* TOP BAR */
-.topbar{
+/* ===== HEADER ===== */
+header{
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
   padding:16px;
   background:var(--card);
-  box-shadow:0 8px 30px rgba(0,0,0,.08);
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
-.menu-btn{font-size:22px;cursor:pointer}
-.logo{font-weight:800;font-size:18px}
 
-/* MENU */
-.menu{
-  position:fixed;
-  top:70px;
-  right:16px;
-  background:var(--card);
-  width:220px;
-  border-radius:18px;
-  box-shadow:0 20px 40px rgba(0,0,0,.25);
-  padding:14px;
-  display:none;
-  animation:drop .3s ease;
-  z-index:99;
-}
-@keyframes drop{
-  from{opacity:0;transform:translateY(-10px)}
-  to{opacity:1;transform:translateY(0)}
-}
-.menu-item{
-  padding:10px;
-  border-radius:12px;
-  font-size:14px;
+.menu-btn{
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
   cursor:pointer;
 }
-.menu-item:hover{background:rgba(0,0,0,.05)}
-.toggle{float:right}
 
-/* NOTICE */
-.notice{
-  margin:16px;
-  padding:14px;
-  background:linear-gradient(135deg,#2563eb,#3b82f6);
-  color:#fff;
-  border-radius:18px;
-  font-size:13px;
+.menu-btn svg{width:22px;height:22px;fill:var(--text)}
+
+.badge{
+  position:absolute;
+  top:10px;right:10px;
+  background:red;color:#fff;
+  font-size:10px;
+  padding:2px 6px;
+  border-radius:20px;
 }
 
-/* SERVICES */
+/* ===== MENU BOX ===== */
+.menu{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,.4);
+  display:none;
+}
+
+.menu-box{
+  width:260px;
+  background:var(--card);
+  height:100%;
+  padding:20px;
+  animation:slide .3s ease;
+}
+
+@keyframes slide{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(0)}
+}
+
+.menu-item{
+  padding:14px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:600;
+}
+.menu-item:hover{background:rgba(0,0,0,.05)}
+
+/* ===== SERVICES ===== */
 .container{padding:16px}
-.services{
+.grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
+
 .card{
   background:var(--card);
-  border-radius:20px;
   padding:18px;
+  border-radius:18px;
+  box-shadow:0 10px 28px rgba(0,0,0,.1);
   text-align:center;
-  box-shadow:0 12px 30px rgba(0,0,0,.12);
-  transition:.25s;
-}
-.card.active{border:2px solid var(--accent);cursor:pointer}
-.card.locked{
-  opacity:.45;
-  filter:grayscale(1);
+  cursor:pointer;
+  transition:.2s;
 }
 
-/* POPUP */
+.card.locked{
+  opacity:.4;
+}
+
+.card:hover{transform:scale(.97)}
+
+.card svg{
+  width:34px;height:34px;
+  margin-bottom:8px;
+  fill:var(--accent);
+}
+
+/* ===== POPUP ===== */
 .popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.5);
   display:none;
   align-items:center;
   justify-content:center;
-  z-index:999;
 }
+
 .popup-box{
   background:var(--card);
-  padding:24px;
-  border-radius:22px;
+  padding:22px;
+  border-radius:20px;
+  width:80%;
+  max-width:300px;
   text-align:center;
-  width:260px;
+  animation:fade .25s ease;
 }
-.popup-box button{
-  margin-top:14px;
-  padding:10px 18px;
+
+@keyframes fade{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+button{
   border:none;
   border-radius:14px;
+  padding:14px;
+  width:100%;
   background:var(--accent);
   color:#fff;
   font-weight:700;
+  margin-top:14px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  text-align:center;
+  font-size:.75rem;
+  color:var(--muted);
+  padding:16px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- TOP -->
-<div class="topbar">
-  <div class="menu-btn" onclick="toggleMenu()">≡</div>
-  <div class="logo">BlueGates</div>
+<header>
+  <strong>BlueGates</strong>
+
+  <div style="position:relative">
+    <div class="menu-btn" onclick="openMenu()">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </div>
+    <div class="badge">1</div>
+  </div>
+</header>
+
+<div class="container">
+  <h3>Services (Kannur Only)</h3>
+
+  <div class="grid">
+    <!-- Mobile -->
+    <div class="card" onclick="bookMobile()">
+      <svg viewBox="0 0 24 24"><path d="M7 2h10v20H7z"/></svg>
+      <strong>Mobile Repair</strong>
+    </div>
+
+    <!-- Locked -->
+    <div class="card locked" onclick="comingSoon()">
+      <svg viewBox="0 0 24 24"><path d="M6 10h12v10H6z"/><path d="M9 10V7a3 3 0 016 0v3"/></svg>
+      <strong>TV Repair</strong>
+    </div>
+
+    <div class="card locked" onclick="comingSoon()"><strong>AC Service</strong></div>
+    <div class="card locked" onclick="comingSoon()"><strong>Home Appliances</strong></div>
+  </div>
 </div>
+
+<footer>© BlueGates • Beta • Kannur</footer>
 
 <!-- MENU -->
 <div class="menu" id="menu">
-  <div class="menu-item">
-    Dark Theme
-    <input type="checkbox" class="toggle" onchange="toggleTheme()">
-  </div>
-  <div class="menu-item" onclick="showNotification()">Updates <strong style="color:red">●</strong></div>
-  <div class="menu-item" onclick="alert('Privacy Policy coming soon')">Privacy Policy</div>
-</div>
+  <div class="menu-box">
+    <h3>Menu</h3>
 
-<!-- NOTICE -->
-<div class="notice">
-Service available **ONLY in Kannur** 🚧  
-We are coming stronger across Kerala soon.
-</div>
+    <div class="menu-item" onclick="toggleTheme()">Theme Toggle</div>
+    <div class="menu-item" onclick="showUpdate()">Updates</div>
+    <div class="menu-item" onclick="showPrivacy()">Privacy Policy</div>
 
-<!-- SERVICES -->
-<div class="container">
-  <div class="services">
-    <div class="card active" onclick="book()">
-      <strong>Mobile Repair</strong><br>
-      <small>Now Available</small>
-    </div>
-
-    <div class="card locked" onclick="comingSoon()">Laptop Repair</div>
-    <div class="card locked" onclick="comingSoon()">TV Repair</div>
-    <div class="card locked" onclick="comingSoon()">AC Service</div>
-    <div class="card locked" onclick="comingSoon()">Home Appliances</div>
-    <div class="card locked" onclick="comingSoon()">Electrical</div>
+    <button onclick="closeMenu()">Close</button>
   </div>
 </div>
 
 <!-- POPUP -->
 <div class="popup" id="popup">
-  <div class="popup-box">
-    <strong>Coming Soon</strong>
-    <p>This service will be available in next update.</p>
-    <button onclick="closePopup()">OK</button>
-  </div>
+  <div class="popup-box" id="popupText"></div>
 </div>
 
 <script>
-function toggleMenu(){
-  const m=document.getElementById('menu');
-  m.style.display=m.style.display==='block'?'none':'block';
-}
+function openMenu(){menu.style.display='block'}
+function closeMenu(){menu.style.display='none'}
+
 function toggleTheme(){
   document.body.classList.toggle('dark');
 }
+
 function comingSoon(){
-  document.getElementById('popup').style.display='flex';
+  showPopup("🚧 Service coming soon.<br>Currently available only Mobile Repair in Kannur.");
 }
-function closePopup(){
-  document.getElementById('popup').style.display='none';
+
+function bookMobile(){
+  showPopup("📍 Mobile Repair available only in Kannur.<br><br>Booking opens via WhatsApp.");
 }
-function showNotification(){
-  alert("This app service is now available only in Kannur. We are coming stronger!");
+
+function showUpdate(){
+  showPopup("🔔 Update<br><br>This app service is now available only in Kannur. We are coming stronger 💪");
 }
-function book(){
-  alert("Mobile Repair booking enabled (Kannur only)");
+
+function showPrivacy(){
+  showPopup("🔒 Privacy Policy<br><br>No personal data stored. Details shared only for service booking.");
 }
+
+function showPopup(text){
+  popup.style.display='flex';
+  popupText.innerHTML = text + '<button onclick="closePopup()">OK</button>';
+}
+
+function closePopup(){popup.style.display='none'}
 </script>
 
 </body>
